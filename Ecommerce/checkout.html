@@ -13,7 +13,6 @@
             <ul>
                 <li><a href="../index.html">Home</a></li>
                 <li><a href="../index.html#products">Products</a></li>
-                <!-- <li><a href="./Ecommerce/checkout.html">Checkout</a></li> -->
             </ul>
         </nav>
     </header>
@@ -24,6 +23,29 @@
             <ul id="checkout-items">
                 <!-- Checkout items will be dynamically inserted here -->
             </ul>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const checkoutItemsContainer = document.getElementById('checkout-items');
+                    const checkoutTotalElement = document.getElementById('checkout-total');
+                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    let total = 0;
+
+                    cart.forEach(item => {
+                        const checkoutItemElement = document.createElement('li');
+                        checkoutItemElement.className = 'checkout-item';
+                        checkoutItemElement.innerHTML = `
+                            <img src="${item.image}" alt="${item.title}" class="checkout-item-image" onerror="this.onerror=null;this.src='default-image.jpg';">
+                            <span class="checkout-item-name">${item.title}</span>
+                            <span class="checkout-item-quantity">Quantity: ${item.quantity}</span>
+                            <span class="checkout-item-price">$${(item.price * item.quantity).toFixed(2)}</span>
+                        `;
+                        checkoutItemsContainer.appendChild(checkoutItemElement);
+                        total += item.price * item.quantity;
+                    });
+
+                    checkoutTotalElement.textContent = total.toFixed(2);
+                });
+            </script>
             <p>Total: $<span id="checkout-total">0.00</span></p>
             <button id="place-order">Place Order</button>
         </section>

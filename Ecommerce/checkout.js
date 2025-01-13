@@ -9,7 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
         cart.forEach(item => {
             total += item.price * item.quantity;
             const checkoutItem = document.createElement('li');
-            checkoutItem.textContent = `${item.title} - $${item.price.toFixed(2)} x ${item.quantity}`;
+            checkoutItem.innerHTML = `
+                <img src="${item.image}" alt="${item.title}" style="width:50px; height:50px; object-fit:cover; margin-right:10px;">
+                ${item.title} - $${item.price.toFixed(2)} x ${item.quantity}
+            `;
             checkoutItemsContainer.appendChild(checkoutItem);
         });
         checkoutTotalElement.textContent = total.toFixed(2);
