@@ -1,9 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     const productsContainer = document.getElementById('products');
-    const cartItemsContainer = document.getElementById('cart-items');
-    const cartTotalElement = document.getElementById('cart-total');
-    let cart = [];
-    
+    const cartCountElement = document.getElementById('cart-count');
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Initialize cart count
+    updateCartCount();
+
     fetch('https://fakestoreapi.com/products')
         .then(response => response.json())
         .then(products => {
@@ -41,31 +43,15 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCart();
     }
 
-    // Update cart display
+    // Update cart display and count
     function updateCart() {
-        cartItemsContainer.innerHTML = '';
-        let total = 0;
-        cart.forEach(item => {
-            total += item.price * item.quantity;
-            const cartItem = document.createElement('li');
-            cartItem.innerHTML = `
-                ${item.title} - $${item.price.toFixed(2)} x ${item.quantity}
-                <button data-id="${item.id}">Remove</button>
-            `;
-            cartItemsContainer.appendChild(cartItem);
-
-            // Add event listener to "Remove" button
-            cartItem.querySelector('button').addEventListener('click', () => {
-                removeFromCart(item.id);
-            });
-        });
-        cartTotalElement.textContent = total.toFixed(2);
         localStorage.setItem('cart', JSON.stringify(cart)); // Save cart to local storage
+        updateCartCount();
     }
 
-    // Remove product from cart
-    function removeFromCart(productId) {
-        cart = cart.filter(item => item.id !== productId);
-        updateCart();
+    // Update cart count display
+    function updateCartCount() {
+        const itemCount = cart.reduce((total, item) => total + item.quantity, 0);
+        cartCountElement.textContent = itemCount;
     }
 });
