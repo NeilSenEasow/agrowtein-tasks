@@ -3,8 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartItemsContainer = document.getElementById('cart-items');
     const cartTotalElement = document.getElementById('cart-total');
     let cart = [];
-
-    // Fetch products from API
+    
     fetch('https://fakestoreapi.com/products')
         .then(response => response.json())
         .then(products => {
