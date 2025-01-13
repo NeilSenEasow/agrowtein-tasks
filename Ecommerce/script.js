@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
         cartTotalElement.textContent = total.toFixed(2);
+        localStorage.setItem('cart', JSON.stringify(cart)); // Save cart to local storage
     }
 
     // Remove product from cart
