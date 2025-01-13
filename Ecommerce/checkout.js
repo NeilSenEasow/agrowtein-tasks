@@ -26,3 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateCheckout();
 }); 
+//Push changes to github
+// git add .
+// git commit -m "Added checkout functionality"
+// git push origin main
+
